@@ -1,0 +1,26 @@
+version: '3.3'
+services:
+  wordpress:
+    image: wordpress:5.8.1
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_NAME: wp-db
+      WORDPRESS_DB_USER: randomuser
+      WORDPRESS_DB_PASSWORD: somerandompasswordhere
+    ports:
+      - 8080:80
+    volumes:
+      - type: bind
+        source: ./wordpress/data
+        target: /var/www/html
+  db:
+    image: mariadb:10.6.4
+    environment:
+      MYSQL_ROOT_PASSWORD: somerandomstringhere
+      MYSQL_DATABASE: wp-db
+      MYSQL_USER: randomuser
+      MYSQL_PASSWORD: somerandompasswordhere
+    volumes:
+      - type: bind
+        source: ./mariadb/data
+        target: /var/lib/mysql
